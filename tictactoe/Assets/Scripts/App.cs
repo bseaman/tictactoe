@@ -16,7 +16,11 @@ public enum GameResult
 public class App : MonoBehaviour
 {
     public static App Instance { get; private set; }
-    internal enum AppState
+
+    public GameMode GameMode { get; private set; }
+    public GameResult GameResult { get; private set; }
+
+    private enum AppState
     {
         None,
         GameSelection,
@@ -48,23 +52,15 @@ public class App : MonoBehaviour
         state = AppState.GameSelection;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void StartGame(GameMode mode)
     {
-        Debug.LogFormat("Starting game: {0}", mode.ToString());
-
+        GameMode = mode;
         state = AppState.GamePlay;
     }
 
     public void EndGame(GameResult result)
     {
-        Debug.LogFormat("Ending game: {0}", result.ToString());
-
+        GameResult = result;
         state = AppState.GameOver;
     }
 
