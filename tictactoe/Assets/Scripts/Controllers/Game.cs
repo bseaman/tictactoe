@@ -22,11 +22,11 @@ public class Game : MonoBehaviour
     private int _numTurns;
     private int _numTurnsToStartScoring;
     
-    // Start is called before the first frame update
     void Start()
     {
         InitializeGameBoard();
         InitializePlayers();
+        StartTurn();
     }
 
     /// <summary>
@@ -45,6 +45,7 @@ public class Game : MonoBehaviour
                 TicTacToeButton gameSquare = instance.GetComponent<TicTacToeButton>();
                 RectTransform transform = instance.GetComponent<RectTransform>();
                 _gameSquares[i * _data.GameBoardDimension + j] = gameSquare;
+                gameSquare.IsInteractable = false;
                 gameSquare.Selected += OnGameSquareSelect;
 
                 transform.anchoredPosition = new Vector2(j * _data.GameSquareSpacing, i * _data.GameSquareSpacing);
@@ -64,34 +65,27 @@ public class Game : MonoBehaviour
 
         if (App.Instance.GameMode == GameMode.TwoPlayer)
         {
-            _players[0] = new Player(PlayerOneMark, _data.TwoPlayerGamePlayerOneTurn);
-            _players[1] = new Player(PlayerTwoMark, _data.TwoPlayerGamePlayerTwoTurn);
+            _players[0] = new HumanPlayer(PlayerOneMark, _data.TwoPlayerGamePlayerOneTurn);
+            _players[1] = new HumanPlayer(PlayerTwoMark, _data.TwoPlayerGamePlayerTwoTurn);
         }
         else
         {
-            _players[0] = new Player(PlayerOneMark, _data.OnePlayerGamePlayerTurn);
-            _players[1] = new Player(PlayerTwoMark, _data.OnePlayerGameOpponentTurn, false);
+            _players[0] = new HumanPlayer(PlayerOneMark, _data.OnePlayerGamePlayerTurn);
+            _players[1] = new ComputerPlayer(PlayerTwoMark, _data.OnePlayerGameOpponentTurn,
+                _data.ComputerPlayerTurnDurationMilliseconds);
         }
     }
 
     /// <summary>
-    /// Callback that is invoked when a game square is selected.
-    /// Marks the square for the current player, evaluates the
-    /// win conditions, and then ends the player's turn.
+    /// Starts the current player's turn.
     /// </summary>
-    /// <param name="gameSquare">The game square that was selected.</param>
-    private void OnGameSquareSelect(TicTacToeButton gameSquare)
+    private void StartTurn()
     {
-        gameSquare.Selected -= OnGameSquareSelect;
+        _header.text = CurrPlayer.TurnText;
 
-        int idx = Array.IndexOf(_gameSquares, gameSquare);
-        if (idx > -1)
-        {
-            CurrPlayer.Bits += 1 << idx;
-            gameSquare.Mark(CurrPlayer.MarkText);
-        }
+        EnableGameSquares(CurrPlayer.IsHuman);
 
-        EndTurn();
+        CurrPlayer.SelectGameSquare(_gameSquares);
     }
 
     /// <summary>
@@ -119,7 +113,20 @@ public class Game : MonoBehaviour
 
         _playerIdx ^= 1;
 
-        _header.text = CurrPlayer.TurnText;
+        StartTurn();
+    }
+
+    /// <summary>
+    /// Sets the interactable state of the game squares.
+    /// </summary>
+    /// <param name="enable">A value of True will enable interactivity
+    /// while False will disable interactivity.</param>
+    private void EnableGameSquares(bool enable)
+    {
+        for (int i = 0; i < _gameSquares.Length; i++)
+        {
+            _gameSquares[i].IsInteractable = enable;
+        }
     }
 
     /// <summary>
@@ -153,5 +160,25 @@ public class Game : MonoBehaviour
         int result = value & mask;
 
         return result == mask;
+    }
+
+    /// <summary>
+    /// Callback that is invoked when a game square is selected.
+    /// Marks the square for the current player, evaluates the
+    /// win conditions, and then ends the player's turn.
+    /// </summary>
+    /// <param name="gameSquare">The game square that was selected.</param>
+    private void OnGameSquareSelect(TicTacToeButton gameSquare)
+    {
+        gameSquare.Selected -= OnGameSquareSelect;
+
+        int idx = Array.IndexOf(_gameSquares, gameSquare);
+        if (idx > -1)
+        {
+            CurrPlayer.Bits += 1 << idx;
+            gameSquare.Mark(CurrPlayer.MarkText);
+        }
+
+        EndTurn();
     }
 }

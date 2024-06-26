@@ -15,6 +15,7 @@ MonoBehaviour:
   GameBoardDimension: 3
   GameSquareSpacing: 70
   WinPatterns: 0700000038000000c00100004900000092000000240100001101000054000000
+  ComputerPlayerTurnDurationMilliseconds: 2000
   OnePlayerGamePlayerTurn: Your turn
   OnePlayerGameOpponentTurn: Opponent's turn
   TwoPlayerGamePlayerOneTurn: Player One's turn

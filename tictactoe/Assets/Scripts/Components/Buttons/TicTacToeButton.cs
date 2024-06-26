@@ -11,7 +11,6 @@ public class TicTacToeButton : MonoBehaviour
     public Action<TicTacToeButton> Selected;
 
     public bool IsSelectable {  get; private set; }
-
     public bool IsInteractable
     {
         get
@@ -20,16 +19,16 @@ public class TicTacToeButton : MonoBehaviour
         }
         set
         {
-            _button.interactable = value;
+            _button.interactable = value && IsSelectable;
         }
     }
 
     private Button _button;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _button = GetComponent<Button>();
+
         IsSelectable = true;
     }
 
@@ -38,6 +37,7 @@ public class TicTacToeButton : MonoBehaviour
         if (IsSelectable)
         {
             IsSelectable = false;
+            IsInteractable = false;
 
             Selected?.Invoke(this);
         }

@@ -6,6 +6,7 @@ public class GamePlayScriptableObject : ScriptableObject
     public int GameBoardDimension;
     public float GameSquareSpacing;
     public int[] WinPatterns;
+    public int ComputerPlayerTurnDurationMilliseconds;
     public string OnePlayerGamePlayerTurn;
     public string OnePlayerGameOpponentTurn;
     public string TwoPlayerGamePlayerOneTurn;

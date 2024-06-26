@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb46a57c83b3b340a900b0e516d46b8, type: 3}
   m_Name: GameResultData
   m_EditorClassIdentifier: 
-  OnePlayerGamePlayerWins: You win!
-  OnePlayerGamePlayerLoses: You lose.
+  OnePlayerGamePlayerWins: You won!
+  OnePlayerGamePlayerLoses: You lost.
   OnePlayerGameDraw: It's a draw!
-  TwoPlayerGamePlayerOneWins: Player One wins!
-  TwoPlayerGamePlayerTwoWins: Player Two wins!
+  TwoPlayerGamePlayerOneWins: Player One won!
+  TwoPlayerGamePlayerTwoWins: Player Two won!
   TwoPlayerGameDraw: It's a draw!

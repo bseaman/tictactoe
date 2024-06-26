@@ -6,7 +6,6 @@ public class ResultText : MonoBehaviour
     [SerializeField]
     private GameResultScriptableObject _data;
 
-    // Start is called before the first frame update
     void Start()
     {
         TMP_Text text = GetComponent<TMP_Text>();
