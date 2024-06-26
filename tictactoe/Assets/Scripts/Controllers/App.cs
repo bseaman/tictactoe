@@ -29,11 +29,10 @@ public class App : MonoBehaviour
     }
 
     private AppState _state = AppState.None;
-    private AppState state {
-        get {
-            return _state;
-        }
-        set {
+    private AppState State
+    {
+        set
+        {
             if (_state != value)
             {
                 _state = value;
@@ -49,23 +48,23 @@ public class App : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        state = AppState.GameSelection;
+        State = AppState.GameSelection;
     }
 
     public void StartGame(GameMode mode)
     {
         GameMode = mode;
-        state = AppState.GamePlay;
+        State = AppState.GamePlay;
     }
 
     public void EndGame(GameResult result)
     {
         GameResult = result;
-        state = AppState.GameOver;
+        State = AppState.GameOver;
     }
 
     public void Restart()
     {
-        state = AppState.GameSelection;
+        State = AppState.GameSelection;
     }
 }

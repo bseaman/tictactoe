@@ -3,10 +3,10 @@ using UnityEngine;
 public class GameModeButton : MonoBehaviour
 {
     [SerializeField]
-    private GameMode gameMode;
+    private GameMode _gameMode;
 
     public void Select()
     {
-        App.Instance.StartGame(gameMode);
+        App.Instance.StartGame(_gameMode);
     }
 }

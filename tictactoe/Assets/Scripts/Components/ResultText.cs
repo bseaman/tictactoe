@@ -4,7 +4,7 @@ using UnityEngine;
 public class ResultText : MonoBehaviour
 {
     [SerializeField]
-    private GameResultScriptableObject data;
+    private GameResultScriptableObject _data;
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +20,11 @@ public class ResultText : MonoBehaviour
             switch(App.Instance.GameResult)
             {
                 case GameResult.PlayerOneWin:
-                    return data.TwoPlayerGamePlayerOneWins;
+                    return _data.TwoPlayerGamePlayerOneWins;
                 case GameResult.PlayerOneLose:
-                    return data.TwoPlayerGamePlayerTwoWins;
+                    return _data.TwoPlayerGamePlayerTwoWins;
                 default:
-                    return data.TwoPlayerGameDraw;
+                    return _data.TwoPlayerGameDraw;
             }
         }
         else
@@ -32,11 +32,11 @@ public class ResultText : MonoBehaviour
             switch (App.Instance.GameResult)
             {
                 case GameResult.PlayerOneWin:
-                    return data.OnePlayerGamePlayerWins;
+                    return _data.OnePlayerGamePlayerWins;
                 case GameResult.PlayerOneLose:
-                    return data.OnePlayerGamePlayerLoses;
+                    return _data.OnePlayerGamePlayerLoses;
                 default:
-                    return data.OnePlayerGameDraw;
+                    return _data.OnePlayerGameDraw;
             }
         }
     }
